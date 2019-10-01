@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="CreditLimit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YearsAtCurrentAddress" Type="int" Nullable="false" />
+          <Property Name="PolicyId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\JOEL\DESKTOP\CSVTODATABASE\CSVTODATABASE\CSVTODATABASE\APP_DATA\DATABASE.MDF.dbo.StagingClients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StagingClients">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="CreditLimit" />
+            <PropertyRef Name="YearsAtCurrentAddress" />
+            <PropertyRef Name="PolicyId" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DOB" Type="date" Nullable="false" />
+          <Property Name="CreditLimit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="YearsAtCurrentAddress" Type="int" Nullable="false" />
+          <Property Name="PolicyId" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StagingClients" EntityType="Self.StagingClients" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StagingClients].[Name] AS [Name], 
+    [StagingClients].[DOB] AS [DOB], 
+    [StagingClients].[CreditLimit] AS [CreditLimit], 
+    [StagingClients].[YearsAtCurrentAddress] AS [YearsAtCurrentAddress], 
+    [StagingClients].[PolicyId] AS [PolicyId]
+    FROM [dbo].[StagingClients] AS [StagingClients]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Clients" EntityType="DatabaseModel.Client" />
+          <EntitySet Name="StagingClients" EntityType="DatabaseModel.StagingClient" />
+        </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreditLimit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="YearsAtCurrentAddress" Type="Int32" Nullable="false" />
+          <Property Name="PolicyId" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StagingClient">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="CreditLimit" />
+            <PropertyRef Name="YearsAtCurrentAddress" />
+            <PropertyRef Name="PolicyId" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CreditLimit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="YearsAtCurrentAddress" Type="Int32" Nullable="false" />
+          <Property Name="PolicyId" Type="Guid" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities" >
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DatabaseModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="YearsAtCurrentAddress" ColumnName="YearsAtCurrentAddress" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StagingClients">
+            <EntityTypeMapping TypeName="DatabaseModel.StagingClient">
+              <MappingFragment StoreEntitySet="StagingClients">
+                <ScalarProperty Name="PolicyId" ColumnName="PolicyId" />
+                <ScalarProperty Name="YearsAtCurrentAddress" ColumnName="YearsAtCurrentAddress" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

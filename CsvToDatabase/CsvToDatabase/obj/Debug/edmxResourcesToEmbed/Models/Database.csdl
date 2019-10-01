@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clients" EntityType="DatabaseModel.Client" />
+    <EntitySet Name="StagingClients" EntityType="DatabaseModel.StagingClient" />
+  </EntityContainer>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreditLimit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="YearsAtCurrentAddress" Type="Int32" Nullable="false" />
+    <Property Name="PolicyId" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StagingClient">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="DOB" />
+      <PropertyRef Name="CreditLimit" />
+      <PropertyRef Name="YearsAtCurrentAddress" />
+      <PropertyRef Name="PolicyId" />
+    </Key>
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CreditLimit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="YearsAtCurrentAddress" Type="Int32" Nullable="false" />
+    <Property Name="PolicyId" Type="Guid" Nullable="false" />
+  </EntityType>
+</Schema>

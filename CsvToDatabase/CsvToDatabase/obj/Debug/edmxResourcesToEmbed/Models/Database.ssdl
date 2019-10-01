@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="CreditLimit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="YearsAtCurrentAddress" Type="int" Nullable="false" />
+    <Property Name="PolicyId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\JOEL\DESKTOP\CSVTODATABASE\CSVTODATABASE\CSVTODATABASE\APP_DATA\DATABASE.MDF.dbo.StagingClients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="StagingClients">
+    <Key>
+      <PropertyRef Name="Name" />
+      <PropertyRef Name="DOB" />
+      <PropertyRef Name="CreditLimit" />
+      <PropertyRef Name="YearsAtCurrentAddress" />
+      <PropertyRef Name="PolicyId" />
+    </Key>
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="CreditLimit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="YearsAtCurrentAddress" Type="int" Nullable="false" />
+    <Property Name="PolicyId" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="DatabaseModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StagingClients" EntityType="Self.StagingClients" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [StagingClients].[Name] AS [Name], 
+    [StagingClients].[DOB] AS [DOB], 
+    [StagingClients].[CreditLimit] AS [CreditLimit], 
+    [StagingClients].[YearsAtCurrentAddress] AS [YearsAtCurrentAddress], 
+    [StagingClients].[PolicyId] AS [PolicyId]
+    FROM [dbo].[StagingClients] AS [StagingClients]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>
